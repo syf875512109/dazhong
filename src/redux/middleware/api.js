@@ -6,7 +6,7 @@ export const FETCH_DATA = 'FETCH_DATA'
 export default store => next => action => {
   const callAPI = action[FETCH_DATA]
 
-  if (!(callAPI && callAPI.types.length != 3)) {
+  if (!(callAPI && callAPI.types)) {
     return next(action)
   }
 
@@ -61,13 +61,13 @@ const normalizeData = (data, schema) => {
   const {id, name} = schema 
 
   let kvObj = {}
-  let ids = {}
+  let ids = []
 
   if (Array.isArray(data)) {
     data.forEach(item => {
 
       kvObj[item[id]] = item
-      ids.push(item[ids])
+      ids.push(item[id])
 
     })
   } else {

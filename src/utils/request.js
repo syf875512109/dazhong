@@ -1,10 +1,12 @@
 
 import axios from 'axios';
 
-const headers = new Headers({
+window.axios = axios 
+
+const headers = {
   'Accept': "application/json",
   "Content-Type": "application/json"
-})
+}
 
 async function get(url, data) {
 
@@ -13,10 +15,10 @@ async function get(url, data) {
       headers,
       params: data,
     })
-    handleResponse(url, response)
+    return handleResponse(url, response)
   } catch(error) {
     console.log(error, `url ${url}`)
-      return Promise.reject(`response status: ${response.status}, ${url}`)
+      return Promise.reject(`response status: ${url}`)
   }
 }
 
@@ -25,22 +27,28 @@ async function post(url, data) {
     const response = await axios.post(url, data, {
       headers,
     });
-    handleResponse(url, response);
+    
+    return handleResponse(url, response);
   }
   catch (error) {
     console.log(error, `url ${url}`);
-    return Promise.reject(`response status: ${response.status}, ${url}`)
+    return Promise.reject(`response status: ${url}`)
   }
 }
 
-async function handleResponse(url, response) {
+function handleResponse(url, response) {
 
-  try {
-    const responseJSON = await response.json()
-    return responseJSON
-  } catch(error) {
+  if (response.status === 200) {
+    return response.data
+  } else {
     return Promise.reject(`response status: ${response.status}, ${url}`)
   }
+  // try {
+  //   const responseJSON = await response.json()
+  //   return responseJSON
+  // } catch(error) {
+  //   return Promise.reject(`response status: ${response.status}, ${url}`)
+  // }
 }
 
 export { get, post }

@@ -1,5 +1,5 @@
 
 export default {
-  getProductList: (rowIndex, pageSize) => 
-  `mock/products/likes.json?rowIndex=${rowIndex}&pageSize=${pageSize}`,
+  getProductList: (path, rowIndex, pageSize) => 
+  `/mock/products/${path}.json?rowIndex=${rowIndex}&pageSize=${pageSize}`,
 }
