@@ -6,6 +6,7 @@ export const FETCH_DATA = 'FETCH_DATA'
 export default store => next => action => {
   const callAPI = action[FETCH_DATA]
 
+  console.log('action', action)
   if (!(callAPI && callAPI.types)) {
     return next(action)
   }
@@ -51,6 +52,9 @@ export default store => next => action => {
 // 执行网络请求
 const fetchData = async (endpoint, schema) => {
   const data = await get(endpoint);
+
+  console.log(endpoint, schema)
+  
   return normalizeData(data, schema);
 }
 
@@ -75,6 +79,12 @@ const normalizeData = (data, schema) => {
     ids.push(data[id])
   }
 
+  const m = {
+    [name]: kvObj,
+    ids,
+  }
+
+  console.log('m', m)
   return {
     [name]: kvObj,
     ids,

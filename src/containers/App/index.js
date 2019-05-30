@@ -1,19 +1,48 @@
 import React, { Component } from 'react';
 
-import ErrorToast from '../../components/ErrorToast' 
+// import ErrorToast from '../../components/ErrorToast' 
 
-import { bindActionCreators } from 'redux' 
+// import { bindActionCreators } from 'redux'
 
 import { connect } from 'react-redux' 
 
-import { actions as appActions, getError } from '../../redux/modules/app'
+// import { actions as appActions, getError } from '../../redux/modules/app'
 
-import Home from '../Home' 
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+
+// import Home from '../Home' 
+
+// import ProductDetail from '../ProductDetail' 
+
+// import Search from '../Search' 
+
+// import SearchResult from '../SearchResult'
+
+// import Login from '../Login'
+
+import PrivateRoute from '../PrivateRoute' 
+
+// import User from '../User' 
+
+// import Purchase from '../purchase';
+
+import AsyncComponent from '../../utils/asyncComponent' 
 
 import './style.css'
 
+const Home = AsyncComponent(() => import('../Home'))
 
-import { get } from '../../utils/request' 
+const ProductDetail = AsyncComponent(() => import('../ProductDetail'))
+
+const Search = AsyncComponent(() => import('../Search'))
+
+const SearchResult = AsyncComponent(() => import('../SearchResult'))
+
+const Login = AsyncComponent(() => import('../Login'))
+
+const User = AsyncComponent(() => import('../User'))
+
+const Purchase = AsyncComponent(() => import('../Purchase'))
 
 class App extends Component {
 
@@ -56,7 +85,17 @@ class App extends Component {
     
     return (
       <div className="App">
-        <Home />
+        <BrowserRouter>
+          <Switch>
+            <Route path="/detail/:id" component={ ProductDetail } />
+            <Route path="/search" component={ Search } />
+            <Route path="/search_result" component={ SearchResult} />
+            <Route path="/login" component={ Login } />
+            <PrivateRoute path="/user" component={ User } />
+            <PrivateRoute path="/purchase/:id" component= { Purchase } />
+            <Route path="/" component={Home} />
+          </Switch>
+        </BrowserRouter>
       </div>
     );
 

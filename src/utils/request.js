@@ -27,7 +27,7 @@ async function post(url, data) {
     const response = await axios.post(url, data, {
       headers,
     });
-    
+    debugger;
     return handleResponse(url, response);
   }
   catch (error) {

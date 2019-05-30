@@ -17,12 +17,12 @@ export const params = {
 
 const initialState = {
   likes: {
-    isFetching: 'null',
+    isFetching: null,
     pageCount: 0,
     ids: [],
   },
   discounts: {
-    isFetching: 'null',
+    isFetching: null,
     ids: [],
   }
 }
@@ -56,6 +56,10 @@ export const actions = {
   loadDiscounts: () => {
 
     return (dispatch, getState) => {
+
+      if(getState().home.discounts.ids.length > 0) {
+        return null
+      }
 
       const path = params.PATH_DISCOUNTS 
 
@@ -124,6 +128,8 @@ const likes = (state = initialState.likes, action) => {
 // 特惠商品
 
 const discounts = (state = initialState.discounts, action) => {
+
+
   switch(action.type) {
     case ActionTypes.FETCH_DISCOUNTS_REQUESTS: {
       return {
@@ -136,7 +142,7 @@ const discounts = (state = initialState.discounts, action) => {
       return {
         ...state,
         isFetching: 'success',
-        ids: state.ids.concat(action.response.ids)
+        ids: action.response.ids
       }
     }
 

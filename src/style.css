@@ -1,8 +1,15 @@
-a {
-  text-decoration: none;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Hiragino Sans GB, Arial,Helvetica, "宋体", sans-serif;
+  background: #f0f0f0;
 }
 
-body {
-  margin: 0px;
-  padding: 0px;
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+a {
+  text-decoration: none
 }

@@ -2,24 +2,20 @@
 import { createStore, applyMiddleware, compose } from 'redux' 
 import rootReducer from './modules'
 
-import thunkMiddleware from 'redux-thunk' 
+import thunk from 'redux-thunk' 
 
 import api from './middleware/api' 
 
-let store 
+let store;
 
-// 继承开发功能redux插件
-if (process.env.NODE_ENV !== 'production' && 
-window.__REDUX__DEVTOOLS__ENTENSION__) {
-
-  const composeEnhancers = window.__REDUX__DEVTOOLS__ENTENSION__COMPOSE__ 
-
-  store = createStore(
-    rootReducer, 
-    compose(applyMiddleware(thunkMiddleware, api), composeEnhancers)
-  )
+if (
+  process.env.NODE_ENV !== "production" &&
+  window.__REDUX_DEVTOOLS_EXTENSION__
+) {
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+  store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk, api)));
 } else {
-  store = createStore(rootReducer, applyMiddleware(thunkMiddleware, api))
+  store = createStore(rootReducer, applyMiddleware(thunk, api));
 }
-
-export default store 
+window.store = store
+export default store;
